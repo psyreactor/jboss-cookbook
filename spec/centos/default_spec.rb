@@ -20,7 +20,7 @@ describe 'jboss::default on Centos 6.5' do
   end
 
   it 'installs a unzip package' do
-    expect(chef_run).to install_package('unzip')
+    expect(chef_run).to install_package('install_unzip')
   end
 
   it 'creates a user for jboss' do

@@ -19,7 +19,8 @@
 
 version_pkg = node[:jboss][:version].split('.').first(2).join('.')
 
-package 'unzip' do
+package 'install_unzip' do
+  package_name 'unzip'
   action :install
 end
 
