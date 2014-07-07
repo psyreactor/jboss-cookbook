@@ -116,6 +116,12 @@ Recipes
     <td>shutdown time wait the init script to give error</td>
     <td><tt>30</tt></td>
   </tr>
+  <tr>
+    <td><tt>node[:jboss][:port_offset]</tt></td>
+    <td>integer</td>
+    <td>define port bind offset</td>
+    <td><tt>0</tt></td>
+  </tr>
 </table>
 
 
@@ -131,15 +137,16 @@ run_list [
     "recipe[jboss]",
     ]
 
-default_attributes: {
-  jboss: {
-      install_path: "/opt",
-      application: "server1",
-      url: "https://yourserver.local/jboss/",
-      checksum: "0ef5d62a660fea46e0c204a9f9f35ad4",
-      version: "6.2.0",
-      admin_user: "admin",
-      admin_passwd: "password"
+"default_attributes": {
+  "jboss": {
+      "install_path": "/opt",
+      "application": "server1",
+      "url": "https://yourserver.local/jboss/",
+      "checksum": "0ef5d62a660fea46e0c204a9f9f35ad4",
+      "version": "6.2.0",
+      "admin_user": "admin",
+      "admin_passwd": "password",
+      "port_offset": "100"
     }
 }
 

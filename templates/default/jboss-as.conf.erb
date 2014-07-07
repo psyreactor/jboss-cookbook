@@ -16,6 +16,10 @@ JBOSS_USER=<%= node[:jboss][:jboss_user] %>
 # Location to keep the console log
 #
 
+JBOSS_BASE_SERVER=<%= "#{node[:jboss][:install_path]}/#{node[:jboss][:application]}/standalone" %>
+
+JBOSS_BIND_PORT=<%= node[:jboss][:port_offset] %>
+
 JBOSS_CONSOLE_LOG=<%= "#{node[:jboss][:log_dir]}/console.log" %>
 
 JBOSS_HOME=<%= "#{node[:jboss][:install_path]}/#{node[:jboss][:application]}" %>

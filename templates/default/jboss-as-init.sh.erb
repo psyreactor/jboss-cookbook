@@ -15,7 +15,6 @@ JBOSS_APP=<%= node[:jboss][:application] %>
 JBOSS_BASE_CONF="/etc/jboss-as"
 JBOSS_BASE_SERVER=<%= "#{node[:jboss][:install_path]}/#{node[:jboss][:application]}"  %>
 
-JBOSS_BIND_MANAGEMENT=$JBOSS_APP
 
 # Load Java configuration.
 [ -r /etc/java/java.conf ] && . /etc/java/java.conf
@@ -57,7 +56,7 @@ if [ -z "$JBOSS_BIND_PORT" ]; then
 fi
 
 if [ -z "$JBOSS_CONFIG" ]; then
-  JBOSS_CONFIG="-b=${JBOSS_BIND} --server-config=${JBOSS_XML} -bmanagement ${JBOSS_BIND_MANAGEMENT}"
+  JBOSS_CONFIG="-Djboss.serer.base.dir=${JBOSS_BASE_SERVER} -b ${JBOSS_BIND} --server-config=${JBOSS_XML} -bmanagement ${JBOSS_BIND_MANAGEMENT} -Djboss.socket.binding.port-offset=${JBOSS_BIND_PORT}"
 fi
 
 JBOSS_SCRIPT=$JBOSS_HOME/bin/standalone.sh
