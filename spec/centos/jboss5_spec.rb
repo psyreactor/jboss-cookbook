@@ -1,22 +1,21 @@
 require_relative '../spec_helper'
 
-describe 'jboss::default on Centos 6.5' do
+describe 'jboss::jboss5 on Centos 6.5' do
   let(:chef_run) do
     ChefSpec::Runner.new(
       :platform => 'centos',
       :version => '6.5'
       ) do |node|
-      node.set[:jboss][:version] = '6.2.0'
-    end.converge('jboss::default')
+      node.set[:jboss][:version] = '5.2.0'
+    end.converge('jboss::jboss5')
   end
 
   let(:jboss_init) { chef_run.template('/etc/init.d/app') }
-  let(:jboss_standalone) { chef_run.template('/opt/app/bin/standalone.conf') }
 
   before do
+    stub_command('test -h /etc/jboss-as/app').and_return(false)
     stub_command('test -h /var/log/jboss-as/app').and_return(true)
-    stub_command('test -h /opt/app/standalone/log').and_return(false)
-    stub_command('grep admin /opt/app/standalone/configuration/mgmt-users.properties').and_return(false)
+    stub_command('test -h /opt/jboss-as/server/app/log').and_return(false)
   end
 
   it 'installs a unzip package' do
@@ -32,7 +31,7 @@ describe 'jboss::default on Centos 6.5' do
   end
 
   it 'download a jboss package' do
-    expect(chef_run).to create_remote_file("#{Chef::Config[:file_cache_path]}/jboss-eap-6.2.0.zip")
+    expect(chef_run).to create_remote_file("#{Chef::Config[:file_cache_path]}/jboss-eap-5.2.0.zip")
   end
 
   it 'extract jboss' do
@@ -41,6 +40,10 @@ describe 'jboss::default on Centos 6.5' do
 
   it 'move directory to detination path' do
     expect(chef_run).to run_execute('jboss_install_path')
+  end
+
+  it 'copy profile directory to detination path' do
+    expect(chef_run).to run_execute('create_profile')
   end
 
   it 'change owner jboss' do
@@ -56,7 +59,7 @@ describe 'jboss::default on Centos 6.5' do
   end
 
   it 'created jboss config file' do
-    expect(chef_run).to create_template('/etc/jboss-as/app.conf')
+    expect(chef_run).to create_template('/opt/jboss-as/server/app/conf/run.conf')
   end
 
   it 'delete symlink to log jboss config file' do
@@ -68,15 +71,15 @@ describe 'jboss::default on Centos 6.5' do
   end
 
   it 'delete default log directory for jboss' do
-    expect(chef_run).to delete_directory('/opt/app/standalone/log')
+    expect(chef_run).to delete_directory('/opt/jboss-as/server/app/log')
   end
 
   it 'create symlink to log jboss config file' do
-    expect(chef_run).to create_link('/opt/app/standalone/log')
+    expect(chef_run).to create_link('/opt/jboss-as/server/app/log')
   end
 
-  it 'add admin user for jboss' do
-    expect(chef_run).to run_execute('add_admin_user')
+  it 'create symlink to config file' do
+    expect(chef_run).to create_link('/etc/jboss-as/app')
   end
 
   it 'declare jboss service' do
@@ -91,14 +94,6 @@ describe 'jboss::default on Centos 6.5' do
   it 'sends a notification to services' do
     expect(jboss_init).to notify('service[app]').to(:enable)
     expect(jboss_init).to notify('service[app]').to(:start)
-  end
-
-  it 'create standalone conf for jboss' do
-    expect(chef_run).to create_template('/opt/app/bin/standalone.conf')
-  end
-
-  it 'sends a notification to services' do
-    expect(jboss_standalone).to notify('service[app]').to(:restart)
   end
 
 end

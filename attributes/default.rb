@@ -17,3 +17,4 @@ default[:jboss][:java_home] = nil
 default[:jboss][:java_opts] = '-Xms1303m -Xmx1303m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true'
 default[:jboss][:preserve_java_opts] = false
 default[:jboss][:port_offset] = 0
+default[:jboss][:config] = 'standalone'

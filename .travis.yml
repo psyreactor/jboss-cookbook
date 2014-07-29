@@ -5,6 +5,6 @@ rvm:
   - 2.0.0
 bundler_args: --without integration
 script:
-  - bundle exec foodcritic .
+  - bundle exec foodcritic --tags ~FC001 .
   - bundle exec rspec -c -fd
   - bundle exec rubocop

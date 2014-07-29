@@ -13,7 +13,8 @@ Requirements
 ------------
 - `java` - Not managed by this cookbook, yuo can use [java-cookbook](https://github.com/socrata-cookbooks/java)
 - `JBoss EAP 6` - Packaged as a zip and stored on a web server acccessible by the node.
-
+- `JBoss EAP 5` - Packaged as a zip and stored on a web server acccessible by the node.
+- 
 #### Cookbooks:
 - No depends
 
@@ -31,6 +32,10 @@ The following platform families are supported in the code, and are assumed to wo
 Recipes
 -------
 #### jboss:default
+The recipe install jboss-eap, according to the version defined in node[:jboss][: version]. 
+The cookbook install versions 5 or 6 jboss-eap.
+
+#### jboss:jboss5 or jboss:jboss6 
 ##### Basic Config
 <table>
   <tr>
