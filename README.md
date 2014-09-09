@@ -170,9 +170,10 @@ Contributing
 
 License and Authors
 -------------------
+
 Authors:
 Lucas Mariani (Psyreactor)
 - [marianiluca@gmail.com](mailto:marianiluca@gmail.com)
 - [https://github.com/psyreactor](https://github.com/psyreactor)
+
 -------------------
-Authors: https://github.com/andrewfraley
