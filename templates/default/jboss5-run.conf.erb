@@ -53,5 +53,5 @@ fi
 # Sample JPDA settings for shared memory debugging 
 #JAVA_OPTS="$JAVA_OPTS -Xrunjdwp:transport=dt_shmem,address=jboss,server=y,suspend=n"
 <% unless node[:jboss][:port_offset] == 0 %>
-  JAVA_OPTS="$JAVA_OPTS -Djboss.service.binding.set=ports-0(<%= node[:jboss][:port_offset]  %>/ 100)"
+  JAVA_OPTS="$JAVA_OPTS -Djboss.service.binding.set=ports-0<%= node[:jboss][:port_offset].first(1)  %> "
 <% end %>
